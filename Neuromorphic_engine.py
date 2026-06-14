@@ -120,6 +120,9 @@ class LIFNeuron:
             input_current=round(input_current, 6),
         )
         self._spike_log.append(state)
+        # Keep only recent entries to prevent memory leak during long sessions
+        if len(self._spike_log) > 500:
+            self._spike_log = self._spike_log[-500:]
 
         return state
 
